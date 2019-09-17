@@ -1,0 +1,114 @@
+<template></template>
+<script>
+  //Component
+  import crud from '@imagina/qcrud/_components/crud'
+
+  export default {
+    computed: {
+      crudData() {
+        return {
+          apiRoute: 'apiRoutes.qtrivia.trivias',
+          permission: 'itrivia.trivias',
+          create: {
+            title: this.$tr('qtrivia.layout.newTrivia'),
+          },
+          read: {
+            columns: [
+              {
+                name: 'id', 
+                label: this.$tr('ui.form.id'), 
+                field: 'id',
+                style: 'width: 50px'
+              },
+              {
+                name: 'title', 
+                label: this.$tr('ui.form.title'), 
+                field: 'title', 
+                align: 'rigth'
+              },
+              {
+                name: 'created_at', 
+                label: this.$tr('ui.form.createdAt'), 
+                field: 'createdAt', 
+                align: 'left',
+                format: val => val ? this.$trd(val) : '-',
+              },
+              {
+                name: 'actions', 
+                label: this.$tr('ui.form.actions'), 
+                align: 'left'
+              },
+            ],
+            requestParams: {include: ''},
+            actions : [
+              {
+                icon : 'fas fa-question-circle',
+                color : 'warning',
+                route : 'qtrivia.admin.questions.index'
+              },
+              {
+                icon : 'fas fa-award',
+                color : 'secondary',
+                route : 'qtrivia.admin.rangepoints.index'
+              },
+            ]
+          },
+          update: {
+          },
+          delete: true,
+          formLeft: {
+            id: {value: ''},
+            title: {
+                label: this.$tr('ui.form.title'),
+                value: '',
+                type: 'text',
+                isRequired: true,
+                isTranslatable: true,
+            },
+            description: {
+                label: this.$tr('ui.form.description'),
+                value: '',
+                type: 'html',
+                isRequired: true,
+                isTranslatable: true,
+            },
+          },
+          formRight: {
+            status : {
+              label: `${this.$tr('ui.form.status')}:`,
+              value: 0,
+              type: 'select',
+              options: [
+                {label: this.$tr('ui.label.enabled'), id: '1'},
+                {label: this.$tr('ui.label.disabled'), id: '0'},
+              ],
+            },
+            startDate:{
+              label: this.$tr('qtrivia.layout.form.startDate'),
+              value: '',
+              type: 'date',
+              isRequired: false,
+              isTranslatable: false,
+            },
+            endDate:{
+              label: this.$tr('qtrivia.layout.form.endDate'),
+              value: '',
+              type: 'date',
+              isRequired: false,
+              isTranslatable: false,
+            },
+            mediasSingle: {
+              name: 'mediasSingle',
+              label: this.$tr('ui.form.image'),
+              value: {},
+              type: 'media',
+              zone: 'mainimage',
+              entity: "Modules\\Itrivia\\Entities\\Trivia",
+              entityId: null
+            },
+          }
+        }
+      }
+    },
+  }
+</script>
