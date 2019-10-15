@@ -1,8 +1,8 @@
-## QTRIVIA  | 1.0.0
+## QTRIVIA  | 0.0.1
 
 ## Installation
 
-`` npm i @imagina/qtrivia@1.0.0 ``
+`` npm i @imagina/qtrivia@0.0.1 ``
 
 ## API Routes
 
