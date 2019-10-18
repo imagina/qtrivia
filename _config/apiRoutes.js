@@ -11,4 +11,6 @@ export default {
   questions: `${urlBase}/questions`,
   answers: `${urlBase}/answers`,
   rangepoints: `${urlBase}/range-points`,
+  userQuestionAnswers: `${urlBase}/user-question-answers`,
+  userTrivias: `${urlBase}/user-trivias`,
 }
