@@ -4,7 +4,7 @@
        <div class="col-12 col-md-12 q-my-xl">
         <q-btn 
         color="primary"  
-        icon="fas fa-trivia" 
+        icon="fas fa-brain" 
         size="md" 
         :label="$tr('qtrivia.layout.goTrivias')"
         @click="$router.push({name: 'qtrivia.admin.trivias.index'})" />
@@ -45,5 +45,5 @@
   }
 </script>
 <style lang="stylus">
-  @import "~variables";
+  
 </style>

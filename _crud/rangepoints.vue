@@ -50,14 +50,18 @@
               label: this.$tr('qtrivia.layout.form.value'),
               value: 0,
               type: 'number',
-              isRequired: true,
+              rules: [
+                val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
               isTranslatable: false,
             },
             points: {
               label: this.$tr('qtrivia.layout.form.points'),
               value: 0,
               type: 'number',
-              isRequired: true,
+              rules: [
+                val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
               isTranslatable: false,
             },
             triviaId: {
@@ -65,7 +69,9 @@
               value: this.$route.params.id,
               type: 'select',
               clearable: false,
-              isRequired: true,
+              rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
               loadOptions: {
                 apiRoute: 'apiRoutes.qtrivia.trivias',
                 select: {label: 'title', id: 'id'},

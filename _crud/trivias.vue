@@ -62,14 +62,18 @@
                 label: this.$tr('ui.form.title'),
                 value: '',
                 type: 'text',
-                isRequired: true,
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
                 isTranslatable: true,
             },
             description: {
                 label: this.$tr('ui.form.description'),
                 value: '',
                 type: 'html',
-                isRequired: true,
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
                 isTranslatable: true,
             },
           },
@@ -79,8 +83,8 @@
               value: 0,
               type: 'select',
               options: [
-                {label: this.$tr('ui.label.enabled'), id: '1'},
-                {label: this.$tr('ui.label.disabled'), id: '0'},
+                {label: this.$tr('ui.label.enabled'), value: '1'},
+                {label: this.$tr('ui.label.disabled'), value: '0'},
               ],
             },
             startDate:{

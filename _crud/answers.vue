@@ -34,7 +34,9 @@
               label: this.$tr('ui.form.title'),
               value: '',
               type: 'text',
-              isRequired: true,
+              rules: [
+                val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
               isTranslatable: true,
             },
             correct: {
@@ -42,8 +44,8 @@
               value: 0,
               type: 'select',
               options: [
-                {label: this.$tr('ui.label.yes'), id: 1},
-                {label: this.$tr('ui.label.no'), id: 0},
+                {label: this.$tr('ui.label.yes'), value: 1},
+                {label: this.$tr('ui.label.no'), value: 0},
               ]
             },
           }
