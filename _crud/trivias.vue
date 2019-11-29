@@ -81,6 +81,7 @@
             storeId:{
               label: 'Tienda',
               value: parseInt(this.$store.state.qmarketplaceStores.storeSelected),
+              permission: 'marketplace.stores.manage',
               rules: [
                   val => !!val || this.$tr('ui.message.fieldRequired')
               ],
