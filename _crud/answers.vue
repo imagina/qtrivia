@@ -1,9 +1,15 @@
 <template></template>
 <script>
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           apiRoute: 'apiRoutes.qtrivia.answers',
           permission: 'itrivia.answers',
           create: {
@@ -31,26 +37,34 @@
           
            formLeft: {
             title: {
-              label: this.$tr('ui.form.title'),
               value: '',
-              type: 'text',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ],
+              type: 'input',
               isTranslatable: true,
+              props: {
+                label: `${this.$tr('ui.form.title')}*`,
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
+              }    
             },
             correct: {
-              label: this.$tr('qtrivia.layout.form.correct'),
-              value: 0,
+              value: '0',
               type: 'select',
-              options: [
-                {label: this.$tr('ui.label.yes'), value: 1},
-                {label: this.$tr('ui.label.no'), value: 0},
-              ]
-            },
+              props: {
+                label: this.$tr('qtrivia.layout.form.correct'),
+                options: [
+                  {label: this.$tr('ui.label.yes'), value: '1'},
+                  {label: this.$tr('ui.label.no'), value: '0'},
+                ]
+              }
+            }
           }
           
         }
+      },
+      //Crud info
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     },
   }

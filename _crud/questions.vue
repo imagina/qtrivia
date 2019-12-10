@@ -1,10 +1,15 @@
 <template></template>
 <script>
-  
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           apiRoute: 'apiRoutes.qtrivia.questions',
           permission: 'itrivia.questions',
           create: {
@@ -34,16 +39,17 @@
           delete: true,
           formLeft: {
             title: {
-              label: this.$tr('ui.form.title'),
               value: '',
-              type: 'text',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ],
+              type: 'input',
               isTranslatable: true,
+              props: {
+                label: `${this.$tr('ui.form.title')}*`,
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
+              }    
             },
             triviaId: {
-              label: this.$tr('qtrivia.layout.singleTrivia'),
               value: this.$route.params.id,
               type: 'select',
               clearable: false,
@@ -52,10 +58,20 @@
                 apiRoute: 'apiRoutes.qtrivia.trivias',
                 select: {label: 'title', id: 'id'},
                 requestParams: {filter: {triviaId : this.$route.params.id}}
-              }
+              },
+              props: {
+                label: this.$tr('qtrivia.layout.singleTrivia'),
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
+              },
             } 
           }
         }
+      },
+      //Crud info
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     },
   }

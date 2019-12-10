@@ -1,12 +1,15 @@
 <template></template>
 <script>
-  //Component
-  import crud from '@imagina/qcrud/_components/crud'
-
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           apiRoute: 'apiRoutes.qtrivia.trivias',
           permission: 'itrivia.trivias',
           create: {
@@ -18,7 +21,8 @@
                 name: 'id', 
                 label: this.$tr('ui.form.id'), 
                 field: 'id',
-                style: 'width: 50px'
+                style: 'width: 50px',
+                sortable: true,
               },
               {
                 name: 'title', 
@@ -32,6 +36,7 @@
                 field: 'createdAt', 
                 align: 'left',
                 format: val => val ? this.$trd(val) : '-',
+                sortable: true,
               },
               {
                 name: 'actions', 
@@ -46,12 +51,14 @@
               {
                 icon : 'fas fa-question-circle',
                 color : 'warning',
-                route : 'qtrivia.admin.questions.index'
+                route : 'qtrivia.admin.questions.index',
+                tooltip : 'Preguntas',
               },
               {
                 icon : 'fas fa-award',
                 color : 'secondary',
-                route : 'qtrivia.admin.rangepoints.index'
+                route : 'qtrivia.admin.rangepoints.index',
+                tooltip : 'Rangos de Puntos',
               },
             ]
           },
@@ -61,73 +68,88 @@
           formLeft: {
             id: {value: ''},
             title: {
-                label: this.$tr('ui.form.title'),
-                value: '',
-                type: 'text',
+              value: '',
+              type: 'input',
+              isTranslatable: true,
+              props: {
+                label: `${this.$tr('ui.form.title')}*`,
                 rules: [
                   val => !!val || this.$tr('ui.message.fieldRequired')
                 ],
-                isTranslatable: true,
+              }    
             },
             description: {
-                label: this.$tr('ui.form.description'),
-                value: '',
-                type: 'html',
+              value: '',
+              type: 'html',
+              isTranslatable: true,
+              props: {
+                label: `${this.$tr('ui.form.description')}*`,
                 rules: [
                   val => !!val || this.$tr('ui.message.fieldRequired')
                 ],
-                isTranslatable: true,
+              }
             },
             storeId:{
-              label: 'Tienda',
               value: parseInt(this.$store.state.qmarketplaceStores.storeSelected),
-              permission: 'marketplace.stores.manage',
-              rules: [
-                  val => !!val || this.$tr('ui.message.fieldRequired')
-              ],
               type: 'select',
               loadOptions: {
                 apiRoute: 'apiRoutes.qmarketplace.store',
                 select: {label: 'name', id: 'id'},
                 requestParams: {filter: {storeId : this.$store.state.qmarketplaceStores.storeSelected}}
               },
+              props: {
+                label: 'Tienda',
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ],
+              },
+              permission: 'marketplace.stores.manage'
             }
           },
           formRight: {
-            status : {
-              label: `${this.$tr('ui.form.status')}:`,
-              value: 0,
+            status: {
+              value: '0',
               type: 'select',
-              options: [
-                {label: this.$tr('ui.label.enabled'), value: '1'},
-                {label: this.$tr('ui.label.disabled'), value: '0'},
-              ],
+              props: {
+                label: this.$tr('ui.form.status'),
+                options: [
+                  {label: this.$tr('ui.label.enabled'), value: '1'},
+                  {label: this.$tr('ui.label.disabled'), value: '0'},
+                ]
+              },
             },
             startDate:{
-              label: this.$tr('qtrivia.layout.form.startDate'),
               value: '',
               type: 'date',
-              isRequired: false,
               isTranslatable: false,
+              props: {
+                label: `${this.$tr('qtrivia.layout.form.startDate')}`
+              }    
             },
             endDate:{
-              label: this.$tr('qtrivia.layout.form.endDate'),
               value: '',
               type: 'date',
-              isRequired: false,
               isTranslatable: false,
+              props: {
+                label: `${this.$tr('qtrivia.layout.form.endDate')}`
+              }    
             },
             mediasSingle: {
-              name: 'mediasSingle',
-              label: this.$tr('ui.form.image'),
               value: {},
               type: 'media',
-              zone: 'mainimage',
-              entity: "Modules\\Itrivia\\Entities\\Trivia",
-              entityId: null
+              props: {
+                label: this.$tr('ui.form.image'),
+                zone: 'mainimage',
+                entity: "Modules\\Itrivia\\Entities\\Trivia",
+                enitityId: null
+              }
             },
           }
         }
+      },
+      //Crud info
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     },
   }
